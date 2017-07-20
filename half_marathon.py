@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+
+print "expects a file HM.gpx with two half marathon races inside"
+print "create this with garmin basecamp"
+
 import gpxpy.gpx
 from gpxpy import geo as mod_geo
 gpxfile=open("HM.gpx","r")
