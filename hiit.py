@@ -7,6 +7,7 @@ from fitparse import FitFile
 import sys
 
 import os
+from os import path
 ff = FitFile(os.path.abspath(sys.argv[1]))
 
 mm = ff.get_messages()
@@ -37,6 +38,39 @@ print "got timestamps" + str(len(ts))
 
 dates = matplotlib.dates.date2num(ts)
 
+# https://plot.ly/javascript/time-series/
+with open(path.splitext(path.basename(sys.argv[1]))[0]+".html",'w') as f:
+    f.write('''<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="myDiv" style="width: 100%; height: 50%;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+var data = [
+  {
+''')
+    f.write("x: [")
+    for t in ts:
+        # https://stackoverflow.com/questions/311627/how-to-print-date-in-a-regular-format-in-python
+        f.write(t.strftime("'%Y-%m-%d %H:%M:%S', "))
+    f.write("],\n")
+    f.write("y: [")
+    for h in hr:
+        f.write("%d, " % (h,))
+    f.write("],\n")
+    f.write('''    type: 'scatter'
+  }
+];
+
+Plotly.newPlot('myDiv', data);
+  </script>
+</body>
+''')
+
+
 plt.plot(ts,hr)
 plt.gcf().autofmt_xdate()
 plt.show()
+
