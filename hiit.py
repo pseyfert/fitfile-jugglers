@@ -14,6 +14,9 @@ mm = ff.get_messages()
 
 ts = []
 hr = []
+
+lapmarkers = []
+
 for m in mm:
     try:
         x = m.as_dict()['fields']
@@ -21,6 +24,16 @@ for m in mm:
         continue
     h = None
     t = None
+    if m.as_dict()['name'] == 'lap':
+        valid = False
+        for xx in x:
+            if xx['name'] == 'lap_trigger':
+                if "manual" == xx['value']: valid = True
+            if xx['name'] == 'timestamp':
+                lapmarker = xx['value']
+        if valid:
+            lapmarkers.append(lapmarker)
+        continue
     if m.as_dict()['name'] != 'record': continue
     for xx in x:
         if xx['name'] == 'heart_rate':
@@ -71,6 +84,8 @@ Plotly.newPlot('myDiv', data);
 
 
 plt.plot(ts,hr)
+for lapmarker in lapmarkers:
+    plt.plot([lapmarker,lapmarker],[0,200])
 plt.gcf().autofmt_xdate()
 plt.show()
 
