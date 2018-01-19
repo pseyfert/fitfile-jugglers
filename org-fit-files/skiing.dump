@@ -1,0 +1,682 @@
+1. file_id
+ * garmin_product: fr920xt
+ * manufacturer: garmin
+ * number: None
+ * serial_number: 3943205000
+ * time_created: 2018-01-19 09:34:47
+ * type: activity
+ * unknown_7: None
+
+2. file_creator
+ * hardware_version: None
+ * software_version: 910
+
+3. event
+ * event: timer
+ * event_group: 0
+ * event_type: start
+ * timer_trigger: manual
+ * timestamp: 2018-01-19 09:34:46
+
+4. device_info
+ * ant_device_number: None
+ * ant_network: None
+ * ant_transmission_type: None
+ * battery_status: None
+ * battery_voltage: None [V]
+ * cum_operating_time: None [s]
+ * device_index: creator
+ * device_type: None
+ * garmin_product: fr920xt
+ * hardware_version: None
+ * manufacturer: garmin
+ * serial_number: 3943205000
+ * software_version: 9.1
+ * source_type: local
+ * timestamp: 2018-01-19 09:34:46
+ * unknown_15: None
+ * unknown_16: None
+ * unknown_23: None
+ * unknown_8: None
+ * unknown_9: None
+
+5. device_info
+ * ant_device_number: None
+ * ant_network: None
+ * ant_transmission_type: None
+ * battery_status: None
+ * battery_voltage: None [V]
+ * cum_operating_time: None [s]
+ * device_index: 1
+ * device_type: 4
+ * garmin_product: fr920xt
+ * hardware_version: None
+ * manufacturer: garmin
+ * serial_number: None
+ * software_version: 9.1
+ * source_type: local
+ * timestamp: 2018-01-19 09:34:46
+ * unknown_15: None
+ * unknown_16: None
+ * unknown_23: None
+ * unknown_8: None
+ * unknown_9: None
+
+6. device_info
+ * ant_device_number: None
+ * ant_network: None
+ * ant_transmission_type: None
+ * battery_status: None
+ * battery_voltage: None [V]
+ * cum_operating_time: None [s]
+ * device_index: 2
+ * device_type: 0
+ * garmin_product: 1620
+ * hardware_version: None
+ * manufacturer: garmin
+ * serial_number: None
+ * software_version: 3.0
+ * source_type: local
+ * timestamp: 2018-01-19 09:34:46
+ * unknown_15: None
+ * unknown_16: None
+ * unknown_23: None
+ * unknown_8: None
+ * unknown_9: None
+
+7. unknown_22
+ * unknown_0: 2
+ * unknown_1: 2
+ * unknown_14: None
+ * unknown_2: None
+ * unknown_253: 885288886
+ * unknown_3: 1
+ * unknown_4: None
+ * unknown_5: 0
+ * unknown_6: None
+
+8. unknown_141
+ * unknown_0: 1
+ * unknown_1: 883828800
+ * unknown_2: 884412000
+ * unknown_253: 885288886
+ * unknown_3: None
+ * unknown_4: None
+ * unknown_5: None
+
+9. unknown_79
+ * unknown_0: 16245
+ * unknown_1: 32
+ * unknown_2: 176
+ * unknown_253: 885288886
+ * unknown_3: 680
+ * unknown_4: 1
+ * unknown_5: 70
+ * unknown_6: 200
+ * unknown_7: 1
+ * unknown_8: 312
+ * unknown_9: 407
+
+10. sport
+ * name: Alpine Skiing
+ * sport: generic
+ * sub_sport: generic
+ * unknown_10: (0, 0, 0)
+ * unknown_4: 29
+ * unknown_5: 1
+ * unknown_6: 0
+
+11. record
+ * altitude: 425.8 [m]
+ * distance: 0.0 [km]
+ * enhanced_altitude: 425.8 [m]
+ * enhanced_speed: 4.5684 [km/h]
+ * position_lat: 46.2306440994 [deg]
+ * position_long: 6.05373174883 [deg]
+ * speed: 4.5684 [km/h]
+ * timestamp: 2018-01-19 09:34:46
+ * unknown_61: 4629
+ * unknown_66: 235
+
+12. record
+ * altitude: 425.6 [m]
+ * distance: 0.00935 [km]
+ * enhanced_altitude: 425.6 [m]
+ * enhanced_speed: 5.3064 [km/h]
+ * position_lat: 46.2307140045 [deg]
+ * position_long: 6.05380089954 [deg]
+ * speed: 5.3064 [km/h]
+ * timestamp: 2018-01-19 09:34:52
+ * unknown_61: 4628
+ * unknown_66: 233
+
+13. record
+ * altitude: 425.6 [m]
+ * distance: 0.01807 [km]
+ * enhanced_altitude: 425.6 [m]
+ * enhanced_speed: 6.048 [km/h]
+ * position_lat: 46.2307593506 [deg]
+ * position_long: 6.0538972076 [deg]
+ * speed: 6.048 [km/h]
+ * timestamp: 2018-01-19 09:34:58
+ * unknown_61: 4628
+ * unknown_66: 233
+
+14. record
+ * altitude: 425.4 [m]
+ * distance: 0.02556 [km]
+ * enhanced_altitude: 425.4 [m]
+ * enhanced_speed: 5.8104 [km/h]
+ * position_lat: 46.2307991646 [deg]
+ * position_long: 6.05398546904 [deg]
+ * speed: 5.8104 [km/h]
+ * timestamp: 2018-01-19 09:35:04
+ * unknown_61: 4627
+ * unknown_66: 234
+
+15. record
+ * altitude: 425.4 [m]
+ * distance: 0.03725 [km]
+ * enhanced_altitude: 425.4 [m]
+ * enhanced_speed: 5.544 [km/h]
+ * position_lat: 46.2308834027 [deg]
+ * position_long: 6.05407926254 [deg]
+ * speed: 5.544 [km/h]
+ * timestamp: 2018-01-19 09:35:10
+ * unknown_61: 4627
+ * unknown_66: 233
+
+16. record
+ * altitude: 425.4 [m]
+ * distance: 0.04932 [km]
+ * enhanced_altitude: 425.4 [m]
+ * enhanced_speed: 6.048 [km/h]
+ * position_lat: 46.2309821416 [deg]
+ * position_long: 6.05414715596 [deg]
+ * speed: 6.048 [km/h]
+ * timestamp: 2018-01-19 09:35:16
+ * unknown_61: 4627
+ * unknown_66: 233
+
+17. record
+ * altitude: 425.0 [m]
+ * distance: 0.06074 [km]
+ * enhanced_altitude: 425.0 [m]
+ * enhanced_speed: 8.1288 [km/h]
+ * position_lat: 46.2310818024 [deg]
+ * position_long: 6.05413299054 [deg]
+ * speed: 8.1288 [km/h]
+ * timestamp: 2018-01-19 09:35:22
+ * unknown_61: 4625
+ * unknown_66: 234
+
+18. unknown_22
+ * unknown_0: None
+ * unknown_1: None
+ * unknown_14: None
+ * unknown_2: None
+ * unknown_253: 885288926
+ * unknown_3: 1
+ * unknown_4: None
+ * unknown_5: 0
+ * unknown_6: None
+
+19. unknown_22
+ * unknown_0: 2
+ * unknown_1: 2
+ * unknown_14: None
+ * unknown_2: None
+ * unknown_253: 885288927
+ * unknown_3: 1
+ * unknown_4: None
+ * unknown_5: 0
+ * unknown_6: None
+
+20. record
+ * altitude: 425.2 [m]
+ * distance: 0.07239 [km]
+ * enhanced_altitude: 425.2 [m]
+ * enhanced_speed: 7.6248 [km/h]
+ * position_lat: 46.2311786134 [deg]
+ * position_long: 6.05408144183 [deg]
+ * speed: 7.6248 [km/h]
+ * timestamp: 2018-01-19 09:35:28
+ * unknown_61: 4626
+ * unknown_66: 233
+
+21. record
+ * altitude: 426.2 [m]
+ * distance: 0.08081 [km]
+ * enhanced_altitude: 426.2 [m]
+ * enhanced_speed: 4.8708 [km/h]
+ * position_lat: 46.2312367 [deg]
+ * position_long: 6.05402285233 [deg]
+ * speed: 4.8708 [km/h]
+ * timestamp: 2018-01-19 09:35:33
+ * unknown_61: 4631
+ * unknown_66: 233
+
+22. record
+ * altitude: 426.2 [m]
+ * distance: 0.08583 [km]
+ * enhanced_altitude: 426.2 [m]
+ * enhanced_speed: 4.0644 [km/h]
+ * position_lat: 46.2312832195 [deg]
+ * position_long: 6.05399209075 [deg]
+ * speed: 4.0644 [km/h]
+ * timestamp: 2018-01-19 09:35:39
+ * unknown_61: 4631
+ * unknown_66: 233
+
+23. record
+ * altitude: 426.0 [m]
+ * distance: 0.09469 [km]
+ * enhanced_altitude: 426.0 [m]
+ * enhanced_speed: 6.012 [km/h]
+ * position_lat: 46.2313492689 [deg]
+ * position_long: 6.05392729864 [deg]
+ * speed: 6.012 [km/h]
+ * timestamp: 2018-01-19 09:35:44
+ * unknown_61: 4630
+ * unknown_66: 233
+
+24. record
+ * altitude: 426.4 [m]
+ * distance: 0.10624 [km]
+ * enhanced_altitude: 426.4 [m]
+ * enhanced_speed: 6.3144 [km/h]
+ * position_lat: 46.2314336747 [deg]
+ * position_long: 6.05383761227 [deg]
+ * speed: 6.3144 [km/h]
+ * timestamp: 2018-01-19 09:35:50
+ * unknown_61: 4632
+ * unknown_66: 234
+
+25. unknown_140
+ * unknown_0: 60
+ * unknown_1: 0
+ * unknown_10: 365
+ * unknown_11: 0
+ * unknown_12: 0
+ * unknown_2: 0
+ * unknown_253: 885288955
+ * unknown_3: 0
+ * unknown_4: 10
+ * unknown_5: 0
+ * unknown_6: 0
+ * unknown_7: 1039685
+ * unknown_8: 0
+ * unknown_9: 312
+
+26. event
+ * data: 312
+ * event: 38
+ * event_group: None
+ * event_type: marker
+ * timestamp: 2018-01-19 09:35:55
+
+27. developer_data_id
+ * application_id: (71, 232, 116, 150, 69, 155, 70, 160, 139, 157, 195, 68, 203, 13, 29, 249)
+ * application_version: 28
+ * developer_data_index: 0
+ * developer_id: None
+ * manufacturer_id: None
+
+28. field_description
+ * developer_data_index: 0
+ * field_definition_number: 12
+ * field_name: Segment
+ * fit_base_type_id: string
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: lap
+ * offset: None
+ * scale: None
+ * units: None
+
+29. field_description
+ * developer_data_index: 0
+ * field_definition_number: 13
+ * field_name: Elevation Difference
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: 49
+ * native_mesg_num: lap
+ * offset: None
+ * scale: None
+ * units: None
+
+30. field_description
+ * developer_data_index: 0
+ * field_definition_number: 0
+ * field_name: Runs
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+31. field_description
+ * developer_data_index: 0
+ * field_definition_number: 1
+ * field_name: Run Time
+ * fit_base_type_id: string
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+32. field_description
+ * developer_data_index: 0
+ * field_definition_number: 2
+ * field_name: Run Distance
+ * fit_base_type_id: float32
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+33. field_description
+ * developer_data_index: 0
+ * field_definition_number: 3
+ * field_name: Run Avg. HR
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: 16
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+34. field_description
+ * developer_data_index: 0
+ * field_definition_number: 4
+ * field_name: Run Avg. Speed
+ * fit_base_type_id: float32
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+35. field_description
+ * developer_data_index: 0
+ * field_definition_number: 5
+ * field_name: Run Avg. Vertical Speed
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+36. field_description
+ * developer_data_index: 0
+ * field_definition_number: 6
+ * field_name: Run Max. HR
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: 17
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+37. field_description
+ * developer_data_index: 0
+ * field_definition_number: 7
+ * field_name: Run Max. Speed
+ * fit_base_type_id: float32
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+38. field_description
+ * developer_data_index: 0
+ * field_definition_number: 8
+ * field_name: Run Max. Vertical Speed
+ * fit_base_type_id: uint16
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+39. field_description
+ * developer_data_index: 0
+ * field_definition_number: 9
+ * field_name: Up Time
+ * fit_base_type_id: string
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+40. field_description
+ * developer_data_index: 0
+ * field_definition_number: 10
+ * field_name: Up Distance
+ * fit_base_type_id: float32
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+41. field_description
+ * developer_data_index: 0
+ * field_definition_number: 11
+ * field_name: Idle Time
+ * fit_base_type_id: string
+ * fit_base_unit_id: None
+ * native_field_num: None
+ * native_mesg_num: session
+ * offset: None
+ * scale: None
+ * units: None
+
+42. lap
+ * Elevation Difference: 0
+ * Segment: UP
+ * avg_cadence: None [rpm]
+ * avg_cadence_position: (None, None) [rpm]
+ * avg_combined_pedal_smoothness: None [percent]
+ * avg_fractional_cadence: None [rpm]
+ * avg_heart_rate: None [bpm]
+ * avg_left_pco: None [mm]
+ * avg_left_pedal_smoothness: None [percent]
+ * avg_left_power_phase: (None, None, None, None) [degrees]
+ * avg_left_power_phase_peak: (None, None, None, None) [degrees]
+ * avg_left_torque_effectiveness: None [percent]
+ * avg_power: None [watts]
+ * avg_power_position: (None, None) [watts]
+ * avg_right_pco: None [mm]
+ * avg_right_pedal_smoothness: None [percent]
+ * avg_right_power_phase: (None, None, None, None) [degrees]
+ * avg_right_power_phase_peak: (None, None, None, None) [degrees]
+ * avg_right_torque_effectiveness: None [percent]
+ * avg_speed: 5.9724 [km/h]
+ * avg_stance_time: None [ms]
+ * avg_stance_time_balance: None [percent]
+ * avg_stance_time_percent: None [percent]
+ * avg_step_length: None [mm]
+ * avg_stroke_distance: None [m]
+ * avg_vertical_oscillation: None [mm]
+ * avg_vertical_ratio: None [percent]
+ * end_position_lat: 46.2314994726 [deg]
+ * end_position_long: 6.05376644991 [deg]
+ * enhanced_avg_speed: 5.9724 [km/h]
+ * enhanced_max_speed: 8.262 [km/h]
+ * event: lap
+ * event_group: None
+ * event_type: stop
+ * first_length_index: None
+ * intensity: None
+ * lap_trigger: manual
+ * left_right_balance: None
+ * max_cadence: None [rpm]
+ * max_cadence_position: (None, None) [rpm]
+ * max_fractional_cadence: None [rpm]
+ * max_heart_rate: None [bpm]
+ * max_power: None [watts]
+ * max_power_position: (None, None) [watts]
+ * max_speed: 8.262 [km/h]
+ * message_index: 0
+ * normalized_power: None [watts]
+ * num_active_lengths: None [lengths]
+ * num_lengths: None [lengths]
+ * sport: generic
+ * stand_count: None
+ * start_position_lat: 46.2306440994 [deg]
+ * start_position_long: 6.05373174883 [deg]
+ * start_time: 2018-01-19 09:34:46
+ * sub_sport: generic
+ * swim_stroke: None
+ * time_in_hr_zone: (None, None, None, None, None, None, None) [s]
+ * time_in_power_zone: (None, None, None, None, None, None, None, None) [s]
+ * time_standing: None [s]
+ * timestamp: 2018-01-19 09:35:56
+ * total_ascent: 1 [m]
+ * total_calories: 5 [kcal]
+ * total_cycles: None [cycles]
+ * total_descent: 0 [m]
+ * total_distance: 115.48 [m]
+ * total_elapsed_time: 69.594 [s]
+ * total_fractional_cycles: None [cycles]
+ * total_timer_time: 69.594 [s]
+ * total_work: None [J]
+ * wkt_step_index: None
+ * unknown_27: 551563273
+ * unknown_28: 72228883
+ * unknown_29: 551553068
+ * unknown_30: 72223833
+ * unknown_70: None
+ * unknown_72: None
+ * unknown_73: None
+ * unknown_90: None
+ * unknown_96: None
+ * unknown_97: None
+
+43. session
+ * Idle Time: -:--
+ * Run Avg. HR: 0
+ * Run Avg. Speed: 0.0
+ * Run Avg. Vertical Speed: 0
+ * Run Distance: 0.0
+ * Run Max. HR: 0
+ * Run Max. Speed: 0.0
+ * Run Max. Vertical Speed: 0
+ * Run Time: -:--
+ * Runs: 0
+ * Up Distance: 0.0832000151277
+ * Up Time: 0:50
+ * avg_cadence: None [rpm]
+ * avg_cadence_position: (None, None) [rpm]
+ * avg_combined_pedal_smoothness: None [percent]
+ * avg_fractional_cadence: None [rpm]
+ * avg_heart_rate: None [bpm]
+ * avg_left_pco: None [mm]
+ * avg_left_pedal_smoothness: None [percent]
+ * avg_left_power_phase: (None, None, None, None) [degrees]
+ * avg_left_power_phase_peak: (None, None, None, None) [degrees]
+ * avg_left_torque_effectiveness: None [percent]
+ * avg_power: None [watts]
+ * avg_power_position: (None, None) [watts]
+ * avg_right_pco: None [mm]
+ * avg_right_pedal_smoothness: None [percent]
+ * avg_right_power_phase: (None, None, None, None) [degrees]
+ * avg_right_power_phase_peak: (None, None, None, None) [degrees]
+ * avg_right_torque_effectiveness: None [percent]
+ * avg_speed: 5.9724 [km/h]
+ * avg_stance_time: None [ms]
+ * avg_stance_time_balance: None [percent]
+ * avg_stance_time_percent: None [percent]
+ * avg_step_length: None [mm]
+ * avg_stroke_count: None [strokes/lap]
+ * avg_stroke_distance: None [m]
+ * avg_vertical_oscillation: None [mm]
+ * avg_vertical_ratio: None [percent]
+ * enhanced_avg_speed: 5.9724 [km/h]
+ * enhanced_max_speed: 8.262 [km/h]
+ * event: lap
+ * event_group: None
+ * event_type: stop
+ * first_lap_index: 0
+ * intensity_factor: None [if]
+ * left_right_balance: None
+ * max_cadence: None [rpm]
+ * max_cadence_position: (None, None) [rpm]
+ * max_fractional_cadence: None [rpm]
+ * max_heart_rate: None [bpm]
+ * max_power: None [watts]
+ * max_power_position: (None, None) [watts]
+ * max_speed: 8.262 [km/h]
+ * message_index: 0
+ * nec_lat: 46.2314994726 [deg]
+ * nec_long: 6.05415503494 [deg]
+ * normalized_power: None [watts]
+ * num_active_lengths: None [lengths]
+ * num_laps: 1
+ * pool_length: None [m]
+ * pool_length_unit: None
+ * sport: generic
+ * stand_count: None
+ * start_position_lat: 46.2306440994 [deg]
+ * start_position_long: 6.05373174883 [deg]
+ * start_time: 2018-01-19 09:34:46
+ * sub_sport: generic
+ * swc_lat: 46.2306440994 [deg]
+ * swc_long: 6.05373174883 [deg]
+ * swim_stroke: None [swim_stroke]
+ * threshold_power: None [watts]
+ * time_in_hr_zone: (None, None, None, None, None, None, None) [s]
+ * time_in_power_zone: (None, None, None, None, None, None, None, None) [s]
+ * time_standing: None [s]
+ * timestamp: 2018-01-19 09:35:56
+ * total_ascent: 1 [m]
+ * total_calories: 5 [kcal]
+ * total_cycles: None [cycles]
+ * total_descent: 0 [m]
+ * total_distance: 115.48 [m]
+ * total_elapsed_time: 69.594 [s]
+ * total_fractional_cycles: None [cycles]
+ * total_timer_time: 69.594 [s]
+ * total_training_effect: None
+ * total_work: None [J]
+ * training_stress_score: None [tss]
+ * trigger: activity_end
+ * unknown_107: None
+ * unknown_108: None
+ * unknown_109: None
+ * unknown_110: Alpine Skiing
+ * unknown_33: None
+ * unknown_78: None
+ * unknown_79: None
+ * unknown_80: None
+ * unknown_81: 0
+
+44. activity
+ * event: activity
+ * event_group: None
+ * event_type: stop
+ * local_timestamp: 2018-01-19 10:35:56
+ * num_sessions: 1
+ * timestamp: 2018-01-19 09:35:56
+ * total_timer_time: 69.594 [s]
+ * type: auto_multi_sport
+
