@@ -2,14 +2,21 @@
 
 import sys
 import os
+import datetime
 import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.dates as mdates
 from matplotlib import gridspec
+from matplotlib.collections import LineCollection
 
 import numpy as np
 
 from fitparse import FitFile
 from pytz import timezone
 
+tz_utc = timezone('UTC')
+epoch = datetime.datetime.utcfromtimestamp(0)
+epoch = tz_utc.localize(epoch).astimezone(timezone('Europe/Zurich'))
 
 ff = FitFile(os.path.abspath(sys.argv[1]))
 
@@ -104,10 +111,10 @@ for m in mm:
     if h is not None and t is not None:
 
         if v is not None:
-            vs.append(3.6*v)
+            vs.append(3.6 * v)
             udforv.append(downwards)
             try:
-                ps.append(60./(3.6*v))
+                ps.append(60. / (3.6 * v))
             except ZeroDivisionError:
                 ps.append(0.)
             tvs.append(tv)
@@ -163,16 +170,22 @@ def convert_time(times):
     tmp = []
     for t in times:
         if t.tzinfo is None:
-            tz = timezone('UTC')
-            tmp.append(tz.localize(t).astimezone(timezone('Europe/Zurich')))
+            tmp.append(tz_utc.localize(t).astimezone(timezone('Europe/Zurich')))
         else:
             tmp.append(t.astimezone(timezone('Europe/Zurich')))
-    return tmp
+    t = matplotlib.dates.date2num(tmp)
+    # return tmp
+    return t
 
 
 ts = convert_time(ts)
 ths = convert_time(ths)
 tvs = convert_time(tvs)
+# tvsf = [(tt - epoch).total_seconds() for tt in tvs]
+try:
+    tvsf = matplotlib.dates.date2num(tvs)  # raises if date2num already applied
+except AttributeError:
+    tvsf = tvs
 
 downvs = np.ma.masked_where(udforv, vs)
 upvs = np.ma.masked_where(np.array([not value for value in udforv]), vs)
@@ -182,7 +195,8 @@ gs = gridspec.GridSpec(3, 1, height_ratios=[2, 1, 1])
 
 ax0 = plt.subplot(gs[0])
 ax0.plot(ts, hs)
-ax0.set_xlim([minheight, maxheight])
+ax0.set_ylim([minheight, maxheight])
+ax0.set_xlim((min(tvsf), max(tvsf)))
 ax0.set_xlabel("time")
 ax0.set_ylabel("altitude")
 for lapmarker in flip_UP:
@@ -192,16 +206,30 @@ for lapmarker in flip_DOWN:
 plt.gcf().autofmt_xdate()
 
 ax1 = plt.subplot(gs[1], sharex=ax0)
+ax1.set_xlabel("time")
+ax1.set_xlim((min(tvsf), max(tvsf)))
 # ax1.plot(tvs, ps)
 # ax1.set_ylabel("pace [min/km]")
-ax1.plot(tvs, vs)
+line_segments = LineCollection([zip(tvsf, upvs), zip(tvsf, downvs)], colors=['b', 'r'])
+ax1.set_ylim((min(vs), max(vs)))
+ax1.add_collection(line_segments)
+# ax1.plot(tvs, vs)
 ax1.set_ylabel("speed [km/h]")
 plt.setp(ax0.get_xticklabels(), visible=False)
 
 ax2 = plt.subplot(gs[2], sharex=ax0)
 ax2.plot(ths, hrs)
 ax2.set_ylabel("heart rate [bpm]")
+ax2.set_xlabel("time")
+ax2.set_xlim((min(tvsf), max(tvsf)))
 plt.setp(ax1.get_xticklabels(), visible=False)
+
+ax2.set_xlim((min(tvsf), max(tvsf)))
+ax2.xaxis.set_major_locator(mdates.HourLocator())
+formatter = mdates.DateFormatter('%H:%M')
+formatter.set_tzinfo(timezone('Europe/Zurich'))
+ax2.xaxis.set_major_formatter(formatter)
+# fig.autofmt_xdate()
 
 yticks = ax0.yaxis.get_major_ticks()
 yticks[-1].label1.set_visible(False)
