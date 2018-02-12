@@ -5,6 +5,7 @@ import os
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib
+from tzwhere import tzwhere
 import matplotlib.dates as mdates
 from matplotlib import gridspec
 from matplotlib.collections import LineCollection
@@ -55,6 +56,9 @@ lastheight = 10000.
 lastflipdist = 0.
 lastflipheight = None
 
+pos_lat = None
+pos_long = None
+
 for m in mm:
     try:
         x = m.as_dict()['fields']
@@ -66,6 +70,7 @@ for m in mm:
     tv = None
     th = None
     v = None
+
     cur_dist = 0.
 
     if m.as_dict()['name'] == 'lap':
@@ -94,6 +99,11 @@ for m in mm:
         continue
 
     for xx in x:
+        if (pos_lat is None) or (pos_long is None):
+            if xx['name'] == 'position_lat':
+                pos_lat = xx['value']
+            if xx['name'] == 'position_long':
+                pos_long = xx['value']
         if xx['name'] == 'altitude':
             h = xx['value']
         if xx['name'] == 'speed':
@@ -157,6 +167,13 @@ for m in mm:
         hs.append(h)
         ts.append(t)
 
+if pos_lat is not None and pos_long is not None:
+    tzwhere = tzwhere.tzwhere()
+    timezone_str = tzwhere.tzNameAt(180. / 2**31 * float(pos_lat),
+                                    180. / 2**31 * float(pos_long))
+    my_timezone = timezone(timezone_str)
+else:
+    my_timezone = timezone('Europe/Zurich')
 
 print("Distance going down: ", total_dist_down)
 print("Distance going up:   ", total_dist_up)
@@ -175,9 +192,9 @@ def convert_time(times):
     tmp = []
     for t in times:
         if t.tzinfo is None:
-            tmp.append(tz_utc.localize(t).astimezone(timezone('Europe/Zurich')))
+            tmp.append(tz_utc.localize(t).astimezone(my_timezone))
         else:
-            tmp.append(t.astimezone(timezone('Europe/Zurich')))
+            tmp.append(t.astimezone(my_timezone))
     t = matplotlib.dates.date2num(tmp)
     # return tmp
     return t
@@ -232,7 +249,7 @@ plt.setp(ax1.get_xticklabels(), visible=False)
 ax2.set_xlim((min(tvsf), max(tvsf)))
 ax2.xaxis.set_major_locator(mdates.HourLocator())
 formatter = mdates.DateFormatter('%H:%M')
-formatter.set_tzinfo(timezone('Europe/Zurich'))
+formatter.set_tzinfo(my_timezone)
 ax2.xaxis.set_major_formatter(formatter)
 # fig.autofmt_xdate()
 
