@@ -18,7 +18,12 @@ tz_utc = timezone('UTC')
 epoch = datetime.datetime.utcfromtimestamp(0)
 epoch = tz_utc.localize(epoch).astimezone(timezone('Europe/Zurich'))
 
-ff = FitFile(os.path.abspath(sys.argv[1]))
+try:
+    ff = FitFile(os.path.abspath(sys.argv[1]))
+except IOError as e:
+    if e.errno == 2:
+        print("Could not open .fit file: {}".format(e.strerror))
+    sys.exit(e.errno)
 
 mm = ff.get_messages()
 
