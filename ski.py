@@ -2,11 +2,13 @@
 
 import sys
 import os
-import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 
+import numpy as np
+
 from fitparse import FitFile
+from pytz import timezone
 
 
 ff = FitFile(os.path.abspath(sys.argv[1]))
@@ -18,7 +20,11 @@ hs = []
 
 tvs = []
 vs = []
+udforv = []
 ps = []
+
+ths = []
+hrs = []
 
 lapmarkers_UP = []
 lapmarkers_RUN = []
@@ -43,8 +49,10 @@ for m in mm:
     except:
         continue
     h = None
+    hr = None
     t = None
     tv = None
+    th = None
     v = None
     cur_dist = 0.
 
@@ -82,14 +90,22 @@ for m in mm:
             t = xx['value']
         if xx['name'] == 'distance':
             cur_dist = xx['value']
+        if xx['name'] == 'heart_rate':
+            hr = xx['value']
+
+    if hr is not None and t is not None:
+        th = t
+        hrs.append(hr)
+        ths.append(th)
 
     if v is not None:
         tv = t
 
     if h is not None and t is not None:
 
-        if downwards:
+        if v is not None:
             vs.append(3.6*v)
+            udforv.append(downwards)
             try:
                 ps.append(60./(3.6*v))
             except ZeroDivisionError:
@@ -111,17 +127,13 @@ for m in mm:
             total_height_down += lastflipheight - h
             lastflipdist = cur_dist
             lastflipheight = h
-            vs.append(0)
             ps.append(0)
-            tvs.append(t)
         elif h > lastheight:  # upwards
             lastheight = h
         elif h > lastheight - 4.:  # upwards
             pass  # fluctuation
         else:
-            vs.append(0)
             ps.append(0)
-            tvs.append(t)
             downwards = True
             lastheight = h
             flip_DOWN.append(t)
@@ -141,13 +153,32 @@ print("Height going down: ", total_height_down)
 print("Height going up:   ", total_height_up)
 print("")
 
-dates = matplotlib.dates.date2num(ts)
+# dates = matplotlib.dates.date2num(ts)
 
 maxheight = max(hs)
 minheight = min(hs)
 
+
+def convert_time(times):
+    tmp = []
+    for t in times:
+        if t.tzinfo is None:
+            tz = timezone('UTC')
+            tmp.append(tz.localize(t).astimezone(timezone('Europe/Zurich')))
+        else:
+            tmp.append(t.astimezone(timezone('Europe/Zurich')))
+    return tmp
+
+
+ts = convert_time(ts)
+ths = convert_time(ths)
+tvs = convert_time(tvs)
+
+downvs = np.ma.masked_where(udforv, vs)
+upvs = np.ma.masked_where(np.array([not value for value in udforv]), vs)
+
 fig = plt.figure()
-gs = gridspec.GridSpec(2, 1, height_ratios=[2, 1])
+gs = gridspec.GridSpec(3, 1, height_ratios=[2, 1, 1])
 
 ax0 = plt.subplot(gs[0])
 ax0.plot(ts, hs)
@@ -166,6 +197,11 @@ ax1 = plt.subplot(gs[1], sharex=ax0)
 ax1.plot(tvs, vs)
 ax1.set_ylabel("speed [km/h]")
 plt.setp(ax0.get_xticklabels(), visible=False)
+
+ax2 = plt.subplot(gs[2], sharex=ax0)
+ax2.plot(ths, hrs)
+ax2.set_ylabel("heart rate [bpm]")
+plt.setp(ax1.get_xticklabels(), visible=False)
 
 yticks = ax0.yaxis.get_major_ticks()
 yticks[-1].label1.set_visible(False)
