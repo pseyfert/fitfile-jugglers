@@ -232,8 +232,15 @@ ax1.set_xlabel("time")
 ax1.set_xlim((min(tvsf), max(tvsf)))
 # ax1.plot(tvs, ps)
 # ax1.set_ylabel("pace [min/km]")
-lincol_array = np.array([list(zip(tvsf, upvs)), list(zip(tvsf, downvs))])
-line_segments = LineCollection(lincol_array, colors=['b', 'r'])
+
+# the hstack just emulates a "zip" but remains in the numpy domain
+# tried dstack[0] but that drops the mask
+# vstack to change shape (shape influences hstack behaviour)
+#
+lincol_array_test1 = np.ma.hstack((np.ma.vstack(tvsf), np.ma.vstack(upvs)))
+lincol_array_test2 = np.ma.hstack((np.ma.vstack(tvsf), np.ma.vstack(downvs)))
+lincol_array_test = np.array((lincol_array_test1, lincol_array_test2))
+line_segments = LineCollection(lincol_array_test, colors=['b', 'r'])
 ax1.set_ylim((min(vs), max(vs)))
 ax1.add_collection(line_segments)
 # ax1.plot(tvs, vs)
