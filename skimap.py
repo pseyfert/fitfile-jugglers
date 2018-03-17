@@ -6,11 +6,14 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from fitparse import FitFile
 import numpy as np
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+
+import utils
 
 colors = 16
 no_OSM = False
-# color_scale = 'speed'
-color_scale = 'heart_rate'
+color_scale = utils.get_speed
+# color_scale = utils.get_heart_rate
 if not no_OSM:
     try:
         import tilemapbase
@@ -51,8 +54,7 @@ for message in message_generator:
             lat = 180. / 2**31 * message_field['value']
         if message_field['name'] == 'position_long':
             lon = 180. / 2**31 * message_field['value']
-        if message_field['name'] == color_scale:
-            v = message_field['value']
+    v = color_scale(message_dict['fields'])
 
     if lat is not None and lon is not None:
         pos_lats.append(lat)
@@ -133,7 +135,10 @@ blackline = LineCollection([list(zip(path_x, path_y)), ],
                            )
 ax.add_collection(blackline)
 ax.add_collection(line_segments)
-# ax.plot(path_x, path_y, color="black", linewidth=0.5)
-# fig.colorbar(line_segments)
+
+
+cbaxes = inset_axes(ax, width="1.5%", height="61%", loc=1, borderpad=5)
+colorbar = fig.colorbar(line_segments, cax=cbaxes)
+colorbar.ax.set_ylabel(color_scale.__name__)
 
 plt.show()
