@@ -9,6 +9,8 @@ import numpy as np
 
 colors = 16
 no_OSM = False
+# color_scale = 'speed'
+color_scale = 'heart_rate'
 if not no_OSM:
     try:
         import tilemapbase
@@ -31,7 +33,7 @@ message_generator = ff.get_messages()
 
 pos_longs = []
 pos_lats = []
-speeds = []
+color_vals = []
 
 for message in message_generator:
     try:
@@ -49,19 +51,20 @@ for message in message_generator:
             lat = 180. / 2**31 * message_field['value']
         if message_field['name'] == 'position_long':
             lon = 180. / 2**31 * message_field['value']
-        if message_field['name'] == 'speed':
+        if message_field['name'] == color_scale:
             v = message_field['value']
 
     if lat is not None and lon is not None:
         pos_lats.append(lat)
         pos_longs.append(lon)
-        speeds.append(v if v is not None else 0.0)
+        color_vals.append(v if v is not None else 0.0)
 
-min_speed = min(speeds)
-max_speed = max(speeds)
+min_color_val = min(color_vals)
+max_color_val = max(color_vals)
 
-speed_intervals = np.linspace(min_speed,
-                              max_speed + (max_speed - min_speed) * 0.01,
+color_intervals = np.linspace(min_color_val,
+                              max_color_val +
+                              (max_color_val - min_color_val) * 0.01,
                               colors + 1)
 
 if background:
@@ -89,9 +92,9 @@ long_array = []
 lat_array = []
 dbg = []
 for color_index in range(colors):
-    mask = [not(speed_intervals[color_index] <= vv and
-                vv < speed_intervals[color_index + 1])
-            for vv in speeds]
+    mask = [not(color_intervals[color_index] <= vv and
+                vv < color_intervals[color_index + 1])
+            for vv in color_vals]
     dbg.append(mask)
     modmask = [mask[0]]
     for i in range(1, len(mask)):
@@ -103,10 +106,11 @@ lincol_array_test = np.ma.array(tuple(np.ma.hstack((np.ma.vstack(long_array[colo
                                                    np.ma.vstack(lat_array[color_index])))
                                       for color_index in range(colors)))
 
-mid_speeds = np.array([(speed_intervals[i] + speed_intervals[i + 1]) / 2.
-                       for i in range(colors)])
+# for the color axis use the middle poins of the intervals
+mid_color_vals = np.array([(color_intervals[i] + color_intervals[i + 1]) / 2.
+                           for i in range(colors)])
 line_segments = LineCollection(lincol_array_test,
-                               array=mid_speeds,
+                               array=mid_color_vals,
                                cmap=plt.get_cmap('jet'))
 
 fig, ax = plt.subplots()
@@ -123,8 +127,13 @@ if background:
 # https://stackoverflow.com/a/21322270
 plt.axis('off')
 
+blackline = LineCollection([list(zip(path_x, path_y)), ],
+                           linewidths=(2.5,),
+                           colors=("black",)
+                           )
+ax.add_collection(blackline)
 ax.add_collection(line_segments)
+# ax.plot(path_x, path_y, color="black", linewidth=0.5)
 # fig.colorbar(line_segments)
-# ax.plot(path_x, path_y, "r-")
 
 plt.show()
