@@ -9,6 +9,8 @@ import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 import utils
+from providers import opensnowmap_slope_provider as slope_provider
+from providers import opensnowmap_base_provider as base_provider
 
 colormap = 'viridis'  # jet
 colors = 16
@@ -124,8 +126,11 @@ fig.set_size_inches(700 / float(DPI), 700 / float(DPI))
 fig.subplots_adjust(hspace=0., wspace=0., left=0., bottom=0., right=1., top=1.)
 
 if background:
-    plotter = tilemapbase.Plotter(extent, tilemapbase.tiles.OSM, width=700)  # 1800)
-    plotter.plot(ax)
+
+    slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=700)
+    base_plotter = tilemapbase.Plotter(extent, base_provider, width=700)
+    base_plotter.plot(ax)
+    slope_plotter.plot(ax)
 
 # https://stackoverflow.com/a/21322270
 plt.axis('off')

@@ -1,0 +1,14 @@
+from tilemapbase.tiles import Tiles as TMB_Tiles
+
+opencyclemap_provider = TMB_Tiles(
+    "https://c.tile.thunderforest.com/cycle/{zoom}/{x}/{y}.png",
+    "OCM_API",
+    headers={'apikey': 'YOURAPIKEYHERE'})
+opensnowmap_slope_provider = TMB_Tiles(
+    "http://www.opensnowmap.org/pistes/{zoom}/{x}/{y}.png",
+    "SNOWREF",
+    headers=YOURACCESSINFORMATIONHERE)
+opensnowmap_base_provider = TMB_Tiles(
+    "http://www5.opensnowmap.org/base_snow_map/{zoom}/{x}/{y}.png",
+    "SNOWBASE",
+    headers=YOURACCESSINFORMATIONHERE)
