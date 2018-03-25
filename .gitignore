@@ -1,5 +1,6 @@
 # Project specific files
-providers.py
+providers.py     # contains access information, like API keys, don't push
+org-fit-files    # contains private data, only push when explicitly asked for
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
