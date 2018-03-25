@@ -10,6 +10,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 import utils
 
+colormap = 'viridis'  # jet
 colors = 16
 no_OSM = False
 color_scale = utils.get_speed
@@ -113,7 +114,7 @@ mid_color_vals = np.array([(color_intervals[i] + color_intervals[i + 1]) / 2.
                            for i in range(colors)])
 line_segments = LineCollection(lincol_array_test,
                                array=mid_color_vals,
-                               cmap=plt.get_cmap('jet'))
+                               cmap=plt.get_cmap(colormap))
 
 fig, ax = plt.subplots()
 DPI = plt.gcf().get_dpi()
