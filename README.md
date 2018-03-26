@@ -38,6 +38,22 @@ steps throughout the day.
 Heart rate parsing for indoor swimming. (haven't figured out the timestamps
 yet).
 
+### `ski.py`
+
+Plot altitude, heart rate, and speed vs. time. detect changes from lift to
+piste, print stats on ski distance and descent and lift distance and ascent.
+
+NB: final statistics don't agree with the in-app stats.
+
+### `skimap.py`
+
+Plot the track on a map and colorize the track according to velocity (or hear
+rate, or other variable).
+
+![skimap](./outputs/skimap.png)
+
+(map data (c) www.openstreetmap.org & contributors published under ODBL; map tiles by www.opensnowmap.org published under CC-BY-SA; the track overlay added by pseyfert, CC-BY-SA).
+
 ## unit tests and references
 
 I would love to let you help and hack around, but, you know, I have
@@ -48,11 +64,11 @@ don't want to make it worse).
 
 ## requirements
 
-I'm using [python-fitparse](https://github.com/dtcooper/python-fitparse) commit
-5283af577d593bfb11bdc582c7d2df61b6ce3c40 and
-[gpxpy](//github.com/pseyfert/gpxpy.git) with my commit
-4449b9cb7b852ccd4068b712d99e71e9139826c4 (from
-[here](https://github.com/podusowski/gpxpy/commit/e9b73b12b84371e0d4908155835469f2704abfe9)
-).
+I'm using:
+ * [python-fitparse](https://github.com/dtcooper/python-fitparse) commit 5283af577d593bfb11bdc582c7d2df61b6ce3c40
+ * [gpxpy](https://github.com/pseyfert/gpxpy.git) with my commit 4449b9cb7b852ccd4068b712d99e71e9139826c4 (from [here](https://github.com/podusowski/gpxpy/commit/e9b73b12b84371e0d4908155835469f2704abfe9)).
+ * [TileMapBase](https://github.com/MatthewDaws/TileMapBase) from commit 7e253c0b1b41ea8c22e3c6a49aec62675d006452
 
-
+Most scripts have been written for python 2.7, though porting them to python
+3.5 (or making them compatible) shouldn't be hard. Those relying on TileMapBase
+even are written for python 3.
