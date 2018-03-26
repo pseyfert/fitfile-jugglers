@@ -72,3 +72,11 @@ I'm using:
 Most scripts have been written for python 2.7, though porting them to python
 3.5 (or making them compatible) shouldn't be hard. Those relying on TileMapBase
 even are written for python 3.
+
+## LICENSE
+
+The project is published under the [MIT license](LICENSE). This does not include:
+
+ * example outputs in the `outputs` directory (CC-BY-SA, see above)
+ * some files imported from other projects:
+   - `setup.cfg` (GPL)
