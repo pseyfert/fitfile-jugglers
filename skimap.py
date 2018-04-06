@@ -9,8 +9,6 @@ import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 import utils
-from providers import opensnowmap_slope_provider as slope_provider
-from providers import opensnowmap_base_provider as base_provider
 
 colormap = 'viridis'  # jet
 colors = 16
@@ -26,6 +24,17 @@ if not no_OSM:
         background = False
 else:
     background = False
+
+if background:
+    try:
+        from providers import opensnowmap_slope_provider as slope_provider
+        from providers import opensnowmap_base_provider as base_provider
+    except ImportError:
+        from tilemapbase.tiles import OSM as base_provider
+
+fig, ax = plt.subplots()
+DPI = plt.gcf().get_dpi()
+fig.set_size_inches(700 / float(DPI), 700 / float(DPI))
 
 
 try:
@@ -79,19 +88,25 @@ if background:
         print("something is wrong with the coordinates.")
         sys.exit(1)
     path_x, path_y = zip(*path)
-
-    mid_x = (min(path_x) + max(path_x)) / 2.
-    mid_y = (min(path_y) + max(path_y)) / 2.
-    size_x = (max(path_x) - min(path_x)) * 1.618033988749894
-    size_y = (max(path_y) - min(path_y)) * 1.618033988749894
-    size = max(size_x, size_y)
-
-    # the factor 1.05 is empiric
-    extent = tilemapbase.Extent.from_centre(mid_x, mid_y, size * 1.05, size)
-
 else:
     path_x, path_y = pos_longs, pos_lats
 
+mid_x = (min(path_x) + max(path_x)) / 2.
+mid_y = (min(path_y) + max(path_y)) / 2.
+size_x = (max(path_x) - min(path_x)) * 1.618033988749894
+size_y = (max(path_y) - min(path_y)) * 1.618033988749894
+size = max(size_x, size_y)
+min_x = mid_x - size / 2.
+max_x = mid_x + size / 2.
+min_y = mid_y - size / 2.
+max_y = mid_y + size / 2.
+
+if background:
+    # the factor 1.05 is empiric
+    extent = tilemapbase.Extent.from_centre(mid_x, mid_y, size * 1.05, size)
+else:
+    ax.set_xlim(min_x, max_x)
+    ax.set_ylim(min_y, max_y)
 
 long_array = []
 lat_array = []
@@ -118,28 +133,28 @@ line_segments = LineCollection(lincol_array_test,
                                array=mid_color_vals,
                                cmap=plt.get_cmap(colormap))
 
-fig, ax = plt.subplots()
-DPI = plt.gcf().get_dpi()
-fig.set_size_inches(700 / float(DPI), 700 / float(DPI))
-
-# https://stackoverflow.com/a/20909062
-fig.subplots_adjust(hspace=0., wspace=0., left=0., bottom=0., right=1., top=1.)
-
 if background:
 
-    slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=700)
+    # https://stackoverflow.com/a/20909062
+    fig.subplots_adjust(hspace=0., wspace=0., left=0., bottom=0., right=1., top=1.)
+
     base_plotter = tilemapbase.Plotter(extent, base_provider, width=700)
     base_plotter.plot(ax)
-    slope_plotter.plot(ax)
+    try:
+        slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=700)
+        slope_plotter.plot(ax)
+    except NameError:
+        pass
 
-# https://stackoverflow.com/a/21322270
-plt.axis('off')
+    # https://stackoverflow.com/a/21322270
+    plt.axis('off')
 
-blackline = LineCollection([list(zip(path_x, path_y)), ],
-                           linewidths=(2.5,),
-                           colors=("black",)
-                           )
-ax.add_collection(blackline)
+    blackline = LineCollection([list(zip(path_x, path_y)), ],
+                               linewidths=(2.5,),
+                               colors=("black",)
+                               )
+    ax.add_collection(blackline)
+
 ax.add_collection(line_segments)
 
 
