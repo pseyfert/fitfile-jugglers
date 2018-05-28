@@ -15,6 +15,7 @@ colors = 16
 no_OSM = False
 color_scale = utils.get_speed
 # color_scale = utils.get_heart_rate
+# color_scale = utils.get_cadence
 if not no_OSM:
     try:
         import tilemapbase

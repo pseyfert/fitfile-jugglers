@@ -47,3 +47,22 @@ def get_pace(message_fields):
 
 
 get_pace.__name__ = "pace [min/km]"
+
+
+def get_cadence(message_fields):
+    """ get_cadence
+    return the cadence as float in 1/min from a message.as_dict()['fields'] object
+
+    Args:
+        message_fields: a message.as_dict()['fields'] object (with name 'record')
+
+    Returns:
+        the cadence as float in 1/min, or 0 if not found
+    """
+    for message_field in message_fields:
+        if message_field['name'] == 'cadence':
+            return message_field['value']
+    return 0.
+
+
+get_cadence.__name__ = "Cadence [1/min]"
