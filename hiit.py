@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import datetime
+# import datetime
+import matplotlib
 import matplotlib.pyplot as plt
 
 from fitparse import FitFile
@@ -20,7 +21,7 @@ lapmarkers = []
 for m in mm:
     try:
         x = m.as_dict()['fields']
-    except:
+    except KeyError:
         continue
     h = None
     t = None
@@ -28,13 +29,15 @@ for m in mm:
         valid = False
         for xx in x:
             if xx['name'] == 'lap_trigger':
-                if "manual" == xx['value']: valid = True
+                if "manual" == xx['value']:
+                    valid = True
             if xx['name'] == 'timestamp':
                 lapmarker = xx['value']
         if valid:
             lapmarkers.append(lapmarker)
         continue
-    if m.as_dict()['name'] != 'record': continue
+    if m.as_dict()['name'] != 'record':
+        continue
     for xx in x:
         if xx['name'] == 'heart_rate':
             h = xx['value']
@@ -44,22 +47,23 @@ for m in mm:
         hr.append(h)
         ts.append(t)
 
-import matplotlib
 
-print "got HR values " + str(len(hr))
-print "got timestamps" + str(len(ts))
+print("got HR values  {}".format(str(len(hr))))
+print("got timestamps {}".format(str(len(ts))))
 
 dates = matplotlib.dates.date2num(ts)
 
 # https://plot.ly/javascript/time-series/
-with open(path.splitext(path.basename(sys.argv[1]))[0]+".html",'w') as f:
+with open(path.splitext(path.basename(sys.argv[1]))[0] + ".html", 'w') as f:
     f.write('''<head>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
-  
-  <div id="myDiv" style="width: 100%; height: 50%;"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+  <div id="myDiv" style="width: 100%; height: 50%;">
+  <!-- Plotly chart will be drawn inside this DIV -->
+  </div>
   <script>
 var data = [
   {
@@ -83,9 +87,8 @@ Plotly.newPlot('myDiv', data);
 ''')
 
 
-plt.plot(ts,hr)
+plt.plot(ts, hr)
 for lapmarker in lapmarkers:
-    plt.plot([lapmarker,lapmarker],[0,200])
+    plt.plot([lapmarker, lapmarker], [0, 200])
 plt.gcf().autofmt_xdate()
 plt.show()
-
