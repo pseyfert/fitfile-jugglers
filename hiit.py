@@ -31,6 +31,19 @@ for m in mm:
             if xx['name'] == 'lap_trigger':
                 if "manual" == xx['value']:
                     valid = True
+                # if "session_end" == xx['value']:
+                #     valid = True
+            if xx['name'] == 'timestamp':
+                lapmarker = xx['value']
+        if valid:
+            lapmarkers.append(lapmarker)
+        continue
+    if m.as_dict()['name'] == 'event':
+        valid = False
+        for xx in x:
+            if xx['name'] == 'timer_trigger':
+                if "manual" == xx['value']:
+                    valid = True
             if xx['name'] == 'timestamp':
                 lapmarker = xx['value']
         if valid:
