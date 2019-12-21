@@ -19,9 +19,11 @@ color_scale = utils.get_speed
 if not no_OSM:
     try:
         import tilemapbase
+        tilemapbase.start_logging()
         background = True
         tilemapbase.init(create=True)
     except ImportError:
+        print("tilemapbase not installed! disabling osm tiles")
         background = False
 else:
     background = False
@@ -31,7 +33,8 @@ if background:
         from providers import opensnowmap_slope_provider as slope_provider
         from providers import opensnowmap_base_provider as base_provider
     except ImportError:
-        from tilemapbase.tiles import OSM as base_provider
+        from tilemapbase.tiles import build_OSM
+        base_provider = build_OSM()
 
 fig, ax = plt.subplots()
 DPI = plt.gcf().get_dpi()
@@ -54,7 +57,7 @@ color_vals = []
 for message in message_generator:
     try:
         message_dict = message.as_dict()
-    except:
+    except AttributeError:
         continue
     if message_dict['name'] != 'record':
         continue
@@ -64,10 +67,24 @@ for message in message_generator:
     v = None
     for message_field in message_dict['fields']:
         if message_field['name'] == 'position_lat':
-            lat = 180. / 2**31 * message_field['value']
+            try:
+                lat = 180. / 2**31 * message_field['value']
+            except TypeError:
+                # happens with etrex touch 35
+                lat = None
         if message_field['name'] == 'position_long':
-            lon = 180. / 2**31 * message_field['value']
-    v = color_scale(message_dict['fields'])
+            try:
+                lon = 180. / 2**31 * message_field['value']
+            except TypeError:
+                # happens with etrex touch 35
+                lon = None
+                pass
+    try:
+        v = color_scale(message_dict['fields'])
+    except:
+        # happens with etrex touch 35
+        v = 0
+        pass
 
     if lat is not None and lon is not None:
         pos_lats.append(lat)
@@ -77,9 +94,11 @@ for message in message_generator:
 min_color_val = min(color_vals)
 max_color_val = max(color_vals)
 
+# add a bit to the max value
+max_color_val += (max_color_val - min_color_val) * 0.01
+
 color_intervals = np.linspace(min_color_val,
-                              max_color_val +
-                              (max_color_val - min_color_val) * 0.01,
+                              max_color_val,
                               colors + 1)
 
 if background:
@@ -113,8 +132,7 @@ long_array = []
 lat_array = []
 dbg = []
 for color_index in range(colors):
-    mask = [not(color_intervals[color_index] <= vv and
-                vv < color_intervals[color_index + 1])
+    mask = [(color_intervals[color_index] > vv or vv >= color_intervals[color_index + 1])
             for vv in color_vals]
     dbg.append(mask)
     modmask = [mask[0]]
@@ -124,7 +142,7 @@ for color_index in range(colors):
     lat_array.append(np.ma.masked_where(modmask, path_y))
 
 lincol_array_test = np.ma.array(tuple(np.ma.hstack((np.ma.vstack(long_array[color_index]),
-                                                   np.ma.vstack(lat_array[color_index])))
+                                                    np.ma.vstack(lat_array[color_index])))
                                       for color_index in range(colors)))
 
 # for the color axis use the middle poins of the intervals
@@ -137,12 +155,13 @@ line_segments = LineCollection(lincol_array_test,
 if background:
 
     # https://stackoverflow.com/a/20909062
-    fig.subplots_adjust(hspace=0., wspace=0., left=0., bottom=0., right=1., top=1.)
+    fig.subplots_adjust(hspace=0., wspace=0., left=0.,
+                        bottom=0., right=1., top=1.)
 
-    base_plotter = tilemapbase.Plotter(extent, base_provider, width=700)
+    base_plotter = tilemapbase.Plotter(extent, base_provider, width=2 * 700)
     base_plotter.plot(ax)
     try:
-        slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=700)
+        slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=2 * 700)
         slope_plotter.plot(ax)
     except NameError:
         pass
