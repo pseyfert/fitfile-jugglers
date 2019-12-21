@@ -56,13 +56,16 @@ lastheight = 10000.
 lastflipdist = 0.
 lastflipheight = None
 
+lowesttime = None
+highesttime = None
+
 pos_lat = None
 pos_long = None
 
 for m in mm:
     try:
         x = m.as_dict()['fields']
-    except:
+    except KeyError:
         continue
     h = None
     hr = None
@@ -139,12 +142,14 @@ for m in mm:
 
         if downwards and h < lastheight:
             lastheight = h
-        elif downwards and h < lastheight + 10.:
+            lowesttime = t
+        elif downwards and h < lastheight + 1.:
             pass  # fluctuation
         elif downwards:
             downwards = False
             lastheight = h
-            flip_UP.append(t)
+            flip_UP.append(lowesttime)
+            lowesttime = None
             total_dist_down += cur_dist - lastflipdist
             total_height_down += lastflipheight - h
             lastflipdist = cur_dist
@@ -152,13 +157,15 @@ for m in mm:
             ps.append(0)
         elif h > lastheight:  # upwards
             lastheight = h
-        elif h > lastheight - 4.:  # upwards
+            highesttime = t
+        elif h > lastheight - 1.:  # upwards
             pass  # fluctuation
         else:
             ps.append(0)
             downwards = True
             lastheight = h
-            flip_DOWN.append(t)
+            flip_DOWN.append(highesttime)
+            highesttime = t
             total_dist_up += cur_dist - lastflipdist
             total_height_up += h - lastflipheight
             lastflipdist = cur_dist
@@ -200,8 +207,10 @@ def convert_time(times):
     return t
 
 
+ts_o = ts
 ts = convert_time(ts)
 ths = convert_time(ths)
+tvs_o = tvs
 tvs = convert_time(tvs)
 # tvsf = [(tt - epoch).total_seconds() for tt in tvs]
 try:
