@@ -9,8 +9,19 @@ def get_speed(message_fields):
         the speed as float in km/h, or 0. if not found
     """
     for message_field in message_fields:
-        if message_field['name'] == 'speed':
-            return 3.6 * message_field['value']
+        try:
+            if message_field['name'] == 'speed':
+                return 3.6 * message_field['value']
+        except TypeError:
+            # NoneType from message_field['value']
+            pass
+    for message_field in message_fields:
+        if message_field['name'] == 'enhanced_speed':
+            try:
+                return 3.6 * message_field['value']
+            except TypeError:
+                # NoneType or something???
+                pass
     return 0.
 
 
