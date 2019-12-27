@@ -29,12 +29,14 @@ else:
     background = False
 
 if background:
-    try:
+    # # from providers import opencyclemap_provider as base_provider
+    # # from providers import opensnowmap_base_provider as base_provider
+    # try:
         from providers import opensnowmap_slope_provider as slope_provider
         from providers import opensnowmap_base_provider as base_provider
-    except ImportError:
-        from tilemapbase.tiles import build_OSM
-        base_provider = build_OSM()
+    # except ImportError:
+        # from tilemapbase.tiles import build_OSM
+        # base_provider = build_OSM()
 
 fig, ax = plt.subplots()
 DPI = plt.gcf().get_dpi()
@@ -81,7 +83,7 @@ for message in message_generator:
                 pass
     try:
         v = color_scale(message_dict['fields'])
-    except:
+    except TypeError:
         # happens with etrex touch 35
         v = 0
         pass

@@ -15,6 +15,8 @@ import numpy as np
 from fitparse import FitFile
 from pytz import timezone
 
+UPDOWN_tolerance = 7.
+
 tz_utc = timezone('UTC')
 epoch = datetime.datetime.utcfromtimestamp(0)
 epoch = tz_utc.localize(epoch).astimezone(timezone('Europe/Zurich'))
@@ -143,7 +145,7 @@ for m in mm:
         if downwards and h < lastheight:
             lastheight = h
             lowesttime = t
-        elif downwards and h < lastheight + 1.:
+        elif downwards and h < lastheight + UPDOWN_tolerance:
             pass  # fluctuation
         elif downwards:
             downwards = False
@@ -158,7 +160,7 @@ for m in mm:
         elif h > lastheight:  # upwards
             lastheight = h
             highesttime = t
-        elif h > lastheight - 1.:  # upwards
+        elif h > lastheight - UPDOWN_tolerance:  # upwards
             pass  # fluctuation
         else:
             ps.append(0)
@@ -230,10 +232,13 @@ ax0.set_ylim([minheight, maxheight])
 ax0.set_xlim((min(tvsf), max(tvsf)))
 ax0.set_xlabel("time")
 ax0.set_ylabel("altitude")
+# FIXME: debug Nones in lapmarkers
 for lapmarker in flip_UP:
-    ax0.plot([lapmarker, lapmarker], [minheight, maxheight], 'b')
+    if lapmarker is not None:
+        ax0.plot([lapmarker, lapmarker], [minheight, maxheight], 'b')
 for lapmarker in flip_DOWN:
-    ax0.plot([lapmarker, lapmarker], [minheight, maxheight], 'r')
+    if lapmarker is not None:
+        ax0.plot([lapmarker, lapmarker], [minheight, maxheight], 'r')
 plt.gcf().autofmt_xdate()
 
 ax1 = plt.subplot(gs[1], sharex=ax0)
