@@ -9,6 +9,6 @@ opensnowmap_slope_provider = TMB_Tiles(
     "SNOWREF",
     headers=YOURACCESSINFORMATIONHERE)
 opensnowmap_base_provider = TMB_Tiles(
-    "http://www5.opensnowmap.org/base_snow_map/{zoom}/{x}/{y}.png",
+    "http://tiles7.opensnowmap.org/base_snow_map/{zoom}/{x}/{y}.png",
     "SNOWBASE",
     headers=YOURACCESSINFORMATIONHERE)
