@@ -15,6 +15,8 @@ import numpy as np
 from fitparse import FitFile
 from pytz import timezone
 
+import utils
+
 UPDOWN_tolerance = 7.
 
 tz_utc = timezone('UTC')
@@ -40,6 +42,8 @@ ps = []
 
 ths = []
 hrs = []
+cds = []
+pws = []
 
 lapmarkers_UP = []
 lapmarkers_RUN = []
@@ -71,6 +75,8 @@ for m in mm:
         continue
     h = None
     hr = None
+    cd = None
+    pw = None
     t = None
     tv = None
     th = None
@@ -119,10 +125,14 @@ for m in mm:
             cur_dist = xx['value']
         if xx['name'] == 'heart_rate':
             hr = xx['value']
+    cd = utils.get_cadence(x)
+    pw = utils.get_power(x)
 
     if hr is not None and t is not None:
         th = t
         hrs.append(hr)
+        cds.append(cd)
+        pws.append(pw)
         ths.append(th)
 
     if v is not None:
@@ -215,16 +225,16 @@ ths = convert_time(ths)
 tvs_o = tvs
 tvs = convert_time(tvs)
 # tvsf = [(tt - epoch).total_seconds() for tt in tvs]
-try:
-    tvsf = matplotlib.dates.date2num(tvs)  # raises if date2num already applied
-except AttributeError:
-    tvsf = tvs
+# try:
+#     tvsf = matplotlib.dates.date2num(tvs)  # raises if date2num already applied
+# except AttributeError:
+tvsf = tvs
 
 downvs = np.ma.masked_where(udforv, vs)
 upvs = np.ma.masked_where(np.array([not value for value in udforv]), vs)
 
 fig = plt.figure()
-gs = gridspec.GridSpec(3, 1, height_ratios=[2, 1, 1])
+gs = gridspec.GridSpec(5, 1, height_ratios=[2, 1, 1, 1, 1])
 
 ax0 = plt.subplot(gs[0])
 ax0.plot(ts, hs)
@@ -275,6 +285,34 @@ formatter.set_tzinfo(my_timezone)
 ax2.xaxis.set_major_formatter(formatter)
 # fig.autofmt_xdate()
 
+ax3 = plt.subplot(gs[3], sharex=ax0)
+ax3.plot(ths, cds)
+ax3.set_ylabel("cadense [rpm]")
+ax3.set_xlabel("time")
+ax3.set_xlim((min(tvsf), max(tvsf)))
+plt.setp(ax1.get_xticklabels(), visible=False)
+
+ax3.set_xlim((min(tvsf), max(tvsf)))
+ax3.xaxis.set_major_locator(mdates.HourLocator())
+formatter = mdates.DateFormatter('%H:%M')
+formatter.set_tzinfo(my_timezone)
+ax3.xaxis.set_major_formatter(formatter)
+# fig.autofmt_xdate()
+
+ax4 = plt.subplot(gs[4], sharex=ax0)
+ax4.plot(ths, pws)
+ax4.set_ylabel("power [Watt]")
+ax4.set_xlabel("time")
+ax4.set_xlim((min(tvsf), max(tvsf)))
+plt.setp(ax1.get_xticklabels(), visible=False)
+
+ax4.set_xlim((min(tvsf), max(tvsf)))
+ax4.xaxis.set_major_locator(mdates.HourLocator())
+formatter = mdates.DateFormatter('%H:%M')
+formatter.set_tzinfo(my_timezone)
+ax4.xaxis.set_major_formatter(formatter)
+# fig.autofmt_xdate()
+
 yticks = ax0.yaxis.get_major_ticks()
 yticks[-1].label1.set_visible(False)
 yticks[0].label1.set_visible(False)
@@ -283,4 +321,21 @@ yticks[-1].label1.set_visible(False)
 yticks[0].label1.set_visible(False)
 
 plt.subplots_adjust(hspace=.0)
+
+vs = np.array(vs)
+hs = np.array(hs)
+hrs = np.array(hrs)
+
+def on_xlims_change(event_ax):
+    selected_hs = np.logical_and(ths > event_ax.get_xlim()[0], ths < event_ax.get_xlim()[1]) 
+    selected_vs = np.logical_and(tvs > event_ax.get_xlim()[0], tvs < event_ax.get_xlim()[1]) 
+    # print(f"{hrs.shape=}, {ths.shape=}")
+    # print(f"{vs.shape=}, {tvs.shape=}")
+    meanspeed = vs[selected_vs].mean()
+    meanHR = hrs[selected_hs].mean()
+    print(f"mean speed in the range shown is {meanspeed}")
+    print(f"mean HR in the range shown is {meanHR}")
+
+ax0.callbacks.connect('xlim_changed', on_xlims_change)
+
 plt.show()

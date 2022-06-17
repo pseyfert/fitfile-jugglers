@@ -28,6 +28,25 @@ def get_speed(message_fields):
 get_speed.__name__ = "Speed [km/h]"
 
 
+def get_power(message_fields):
+    """ get_power
+    return the power as float in Watts from a message.as_dict()['fields'] object
+
+    Args:
+        message_fields: a message.as_dict()['fields'] object (with name 'record')
+
+    Returns:
+        the power as float in watts, or 0. if not found
+    """
+    for message_field in message_fields:
+        if message_field['name'] == 'power':
+            return message_field['value']
+    return 0.
+
+
+get_power.__name__ = "Power [Watts]"
+
+
 def get_heart_rate(message_fields):
     """ get_heart_rate
     return the heart rate as float from a message.as_dict()['fields'] object
