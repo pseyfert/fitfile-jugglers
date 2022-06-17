@@ -327,8 +327,16 @@ hs = np.array(hs)
 hrs = np.array(hrs)
 
 def on_xlims_change(event_ax):
-    selected_hs = np.logical_and(ths > event_ax.get_xlim()[0], ths < event_ax.get_xlim()[1]) 
-    selected_vs = np.logical_and(tvs > event_ax.get_xlim()[0], tvs < event_ax.get_xlim()[1]) 
+    try:
+        if on_xlims_change.cache == event_ax.get_xlim():
+            return
+    except AttributeError:
+        pass
+    on_xlims_change.cache = event_ax.get_xlim()
+    low, high = on_xlims_change.cache
+
+    selected_hs = np.logical_and(ths > low, ths < high)
+    selected_vs = np.logical_and(tvs > low, tvs < high)
     # print(f"{hrs.shape=}, {ths.shape=}")
     # print(f"{vs.shape=}, {tvs.shape=}")
     meanspeed = vs[selected_vs].mean()
@@ -336,6 +344,7 @@ def on_xlims_change(event_ax):
     print(f"mean speed in the range shown is {meanspeed}")
     print(f"mean HR in the range shown is {meanHR}")
 
-ax0.callbacks.connect('xlim_changed', on_xlims_change)
+for ax in fig.axes:
+    ax.callbacks.connect('xlim_changed', on_xlims_change)
 
 plt.show()
