@@ -263,7 +263,7 @@ ax1.set_xlim((min(tvsf), max(tvsf)))
 #
 lincol_array_test1 = np.ma.hstack((np.ma.vstack(tvsf), np.ma.vstack(upvs)))
 lincol_array_test2 = np.ma.hstack((np.ma.vstack(tvsf), np.ma.vstack(downvs)))
-lincol_array_test = np.array((lincol_array_test1, lincol_array_test2))
+lincol_array_test = np.ma.stack((lincol_array_test1, lincol_array_test2))
 line_segments = LineCollection(lincol_array_test, colors=['b', 'r'])
 ax1.set_ylim((min(vs), max(vs)))
 ax1.add_collection(line_segments)
