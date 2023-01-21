@@ -147,7 +147,7 @@ lincol_array_test = np.ma.array(tuple(np.ma.hstack((np.ma.vstack(long_array[colo
                                                     np.ma.vstack(lat_array[color_index])))
                                       for color_index in range(colors)))
 
-# for the color axis use the middle poins of the intervals
+# for the color axis use the middle points of the intervals
 mid_color_vals = np.array([(color_intervals[i] + color_intervals[i + 1]) / 2.
                            for i in range(colors)])
 line_segments = LineCollection(lincol_array_test,
@@ -161,10 +161,10 @@ if background:
                         bottom=0., right=1., top=1.)
 
     base_plotter = tilemapbase.Plotter(extent, base_provider, width=2 * 700)
-    base_plotter.plot(ax)
+    base_plotter.plot(ax, allow_large=True)
     try:
         slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=2 * 700)
-        slope_plotter.plot(ax)
+        slope_plotter.plot(ax, allow_large=True)
     except NameError:
         pass
 
@@ -184,4 +184,47 @@ cbaxes = inset_axes(ax, width="1.5%", height="61%", loc=1, borderpad=5)
 colorbar = fig.colorbar(line_segments, cax=cbaxes)
 colorbar.ax.set_ylabel(color_scale.__name__)
 
+def redo_bkg(event_ax):
+    print("trying really hard to redraw the background with better res")
+    xmin, xmax = event_ax.get_xlim()
+    ymax, ymin = event_ax.get_ylim()
+    print(f"{xmin=}, {xmax=}, {ymin=}, {ymax=}")
+    try:
+        if redo_bkg.xcache == event_ax.get_xlim() and redo_bkg.ycache == event_ax.get_ylim():
+            print("nothing to be done")
+            return
+    except AttributeError:
+        pass
+    redo_bkg.xcache = event_ax.get_xlim()
+    redo_bkg.ycache = event_ax.get_ylim()
+    xmin, xmax = redo_bkg.xcache
+    ymax, ymin = redo_bkg.ycache
+    extent = tilemapbase.Extent(xmin, xmax, ymin, ymax)
+    base_plotter = tilemapbase.Plotter(extent, base_provider, width=2 * 700)
+    base_plotter.plot(event_ax, allow_large=True)
+    try:
+        slope_plotter = tilemapbase.Plotter(extent, slope_provider, width=2 * 700)
+        slope_plotter.plot(event_ax, allow_large=True)
+    except NameError:
+        pass
+
+    # https://stackoverflow.com/a/21322270
+    plt.axis('off')
+
+    event_ax.add_collection(blackline)
+    event_ax.add_collection(line_segments)
+
+
+    cbaxes = inset_axes(event_ax, width="1.5%", height="61%", loc=1, borderpad=5)
+    colorbar = fig.colorbar(line_segments, cax=cbaxes)
+    colorbar.ax.set_ylabel(color_scale.__name__)
+    print("thanks for your patience, done")
+
+
+ax.callbacks.connect('xlim_changed', redo_bkg)
+ax.callbacks.connect('ylim_changed', redo_bkg)
+
+xmin, xmax = ax.get_xlim()
+ymax, ymin = ax.get_ylim()
+print(f"{xmin=}, {xmax=}, {ymin=}, {ymax=}")
 plt.show()
