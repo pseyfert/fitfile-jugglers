@@ -1,3 +1,24 @@
+def get_power_right_left(message_fields):
+    power = 0.
+    lrencoded = None
+    for message_field in message_fields:
+        if message_field['name'] == 'power':
+            power = message_field['value']
+        if message_field['name'] == 'left_right_balance':
+            lrencoded = message_field['value']
+    if lrencoded == 'right':
+        lrencoded = 0x80
+    if lrencoded is None:
+        return (None, None)
+
+    if lrencoded & 0x80:
+        factor_right = (lrencoded & 0x7f)/100.
+    else:
+        factor_right = 1 - (lrencoded & 0x7f)/100.
+    factor_left = 1 - factor_right
+    return (factor_right * power, factor_left * power)
+
+
 def get_speed(message_fields):
     """ get_speed
     return the speed as float in km/h from a message.as_dict()['fields'] object

@@ -44,6 +44,8 @@ ths = []
 hrs = []
 cds = []
 pws = []
+pwsl = []
+pwsr = []
 
 lapmarkers_UP = []
 lapmarkers_RUN = []
@@ -127,12 +129,15 @@ for m in mm:
             hr = xx['value']
     cd = utils.get_cadence(x)
     pw = utils.get_power(x)
+    pwr, pwl = utils.get_power_right_left(x)
 
     if hr is not None and t is not None:
         th = t
         hrs.append(hr)
         cds.append(cd)
         pws.append(pw)
+        pwsl.append(pwl)
+        pwsr.append(pwr)
         ths.append(th)
 
     if v is not None:
@@ -300,7 +305,11 @@ ax3.xaxis.set_major_formatter(formatter)
 # fig.autofmt_xdate()
 
 ax4 = plt.subplot(gs[4], sharex=ax0)
-ax4.plot(ths, pws)
+if all((p is None for p in pwsl)):
+    ax4.plot(ths, pws)
+else:
+    ax4.plot(ths, pwsl, marker = '<')
+    ax4.plot(ths, pwsr, marker = '>')
 ax4.set_ylabel("power [Watt]")
 ax4.set_xlabel("time")
 ax4.set_xlim((min(tvsf), max(tvsf)))
